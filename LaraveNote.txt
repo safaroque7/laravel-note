@@ -1,0 +1,54 @@
+1. How to download Laravel project from Github and run it?
+https://www.youtube.com/watch?v=1xQCp_Yfpi0
+
+2. How to bled templeting?
+
+3. How to create controller on laravel to send data to database?
+
+4. How to send data to database on laravel with DB query bilders?
+
+5. How to log in on Laravel? 
+
+6. $request->session()->put('key', 'value');
+Data can be stored in session using the put(). The put() method will take two arguments, the "key" and "Value"
+
+
+7. $value = $request->session()->get('key');
+Data can be stored in session using the get(). The get() method will take one argument "key".
+
+
+8. $request->session()->forget('key');
+The forget() method is used to delete an item from the session. This method will take "key" as the argument.
+
+
+9. $request->session()->flush();
+The flush() method is used to delete all session data.
+
+
+10. pull() method is used to retrieve data from session and delete it afterwards.
+Now you can ask me is there any difference between forget() method and pull() method?
+The answer will be, Yes. There is a difference between forget() and pull() method is that forget() method will not return the value of the session and pull() method will return it and delete that value from session.
+
+11. Is there any difference between redirect() and view() in laravel?
+
+রাউটারের মাধ্যমে কোন পেইজ দেখাতে চাইলে Route::get()
+রাউটারের মাধ্যমে কোন ডাটা পাস করতে চাইলে Route::post();
+
+রাউট যদি Route::post(); লিখা হয় তাহলে কন্ট্রোলারের মেথড redirect() করতে হবে।  ???
+আর রাউট যদি Route::get(); লিখা হয় তাহলে কন্ট্রোলারের মেথড view() করতে হবে।  ???
+
+12. Is there any difference between route() and to_route() in laravel?
+to_route() is global;
+
+13. When do we have to use Route::get() and Route::post()?
+
+14. To go new website..
+return redirect()->away("https://webnewsdesign.com"); In this case Route has to be Route::get();
+
+15. লগিন করা থাকলেই কেবল হোম পেইজে যেতে পারবে, অন্যথায় লগিন পেইজে রিডিরেক্ট করে দেওয়া হবে। 
+
+16. আমি দুটি কম্পিউটারে কাজ করি। একটি বাসায়, অন্যটি অফিসে। অফিসে যতটুকু কাজ করি, সেটুকু গিটহাবে তুলে রাখি। সেটা আবার বাসায় গিয়ে ক্লোন করে কাজ করি। সেক্ষেত্রে কি প্রতিবার ক্লোন করা ছাড়া আর কোনোভাবে কাজ করা যায়?
+
+
+
+@error directive
