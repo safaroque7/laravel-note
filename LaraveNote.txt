@@ -49,6 +49,9 @@ return redirect()->away("https://webnewsdesign.com"); In this case Route has to 
 
 16. আমি দুটি কম্পিউটারে কাজ করি। একটি বাসায়, অন্যটি অফিসে। অফিসে যতটুকু কাজ করি, সেটুকু গিটহাবে তুলে রাখি। সেটা আবার বাসায় গিয়ে ক্লোন করে কাজ করি। সেক্ষেত্রে কি প্রতিবার ক্লোন করা ছাড়া আর কোনোভাবে কাজ করা যায়?
 
+Solution
+https://github.com/safaroque7/laravelNote/blob/main/solution.jpg
+
 
 
 @error directive
