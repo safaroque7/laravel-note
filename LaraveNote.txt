@@ -52,6 +52,111 @@ return redirect()->away("https://webnewsdesign.com"); In this case Route has to 
 Solution
 https://github.com/safaroque7/laravelNote/blob/main/solution.jpg
 
-
-
 @error directive
+
+
+
+*********************************************
+
+
+17. রিলোড দিলে সর্বশেষ পোস্ট রিপোস্ট হয়। কন্ট্রোলের কোড নিচে দেওয়া হল। এর সমাধান খুঁজে বের করতে হবে। 
+
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class postController extends Controller
+{
+    public function post(Request $request)
+    {
+
+        $request->validate([
+            "tweet" => 'required|min:1',
+        ]);
+
+        $data = [
+            "tweet" => $request->tweet,
+        ];
+
+        DB::table("post")->insert($data);
+
+        $posts = DB::table("post")->orderBy('id', 'desc')->get();
+
+        return view("welcome", compact('posts'));
+    }
+}
+
+
+**Solution
+We have to create controller by folloing code
+php artisan make:controller posts --resource
+
+As a result we will get a file where there are 7 methods. Such as 
+1. index
+2. create
+3. store
+4. show
+5. edit
+6. update
+7. destroy
+
+We have to code for for home page view following way.
+
+public function index()
+    {
+        $posts = DB::table("post")->orderBy('id', 'desc')->get();
+        // dd($posts);
+
+        return view("welcome", compact('posts'));
+    }
+	
+	
+Then
+
+ public function store(Request $request)
+    {
+        $request->validate([
+            "tweet" => 'required|min:1',
+        ]);
+
+        $data = [
+            "tweet" => $request->tweet,
+        ];
+
+        DB::table("post")->insert($data);
+        return redirect()->route("posts.index");
+    }
+	
+	
+*********************************************
+
+
+
+
+18. How will I realize that when we have to use left join, right join, outer join of database in DB query builder?
+
+
+
+
+Route::get('/', function () {
+    $posts = DB::table('users')
+        ->leftJoin('post', 'users.id', '=', 'post.id')
+        ->get();
+
+        // dd($posts);
+
+    return view('welcome', compact('posts'));
+});
+
+** Explanation
+
+We would like to add 'post' table with 'users' table.
+leftJoin('post', 'users.id', '=', 'post.id')
+The user's id and post's id have to be same.
+
+Finally we will get a query where there will be a datum as a array.
+Then we will get data as usual.
