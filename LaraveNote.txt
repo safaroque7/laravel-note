@@ -160,3 +160,141 @@ The user's id and post's id have to be same.
 
 Finally we will get a query where there will be a datum as a array.
 Then we will get data as usual.
+
+
+
+
+19.
+যে আইডি দিয়েই লগিন করি না কেন, আগের সকল পোস্ট এই ইউজারের নামে দেখায়।
+
+
+
+20. std:Class, it is not a main issue. You have to follow other words there are in this error.
+
+21. route, controller, migration [serial]
+Migration
+Route
+controller
+
+22. after using --resource what methods we are given, what if we change these. Such index() will be myIndex and so on.
+Ans: Yes, you can.
+
+
+22. code beautifier or clean code | php code fixer
+https://github.com/squizlabs/PHP_CodeSniffer
+
+
+23. How to change table name ?
+
+* At first you have to create a new table. Such as
+------------------------------------------------
+php artisan make:migration create_rename_table
+----------------------------------------------
+
+* Then open this file. And you write the following code uner the up() function.
+-----------------------------------------------------
+ public function up()
+    {
+        Schema::rename('testing', 'newTable'); 
+		//testing is existing table name and newTable is the new table table
+    }
+-----------------------------------------------------
+
+* Then you have to write on Terminal the folowing code.
+---------------------------------------------------------
+php artisan migrate
+---------------------------------------------------------
+
+Finallay existing table name will be changed with new name.
+
+
+24. How to delete table name in laravel?
+
+
+25. How to add new column name on existing table in laravel?
+
+* At first you have to create a new table. Such as
+------------------------------------------------
+php artisan make:migration create_operation_table
+----------------------------------------------
+
+* Then open this file. And you write the following code.
+-----------------------------------------------------
+public function up()
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('qualification');
+        });
+		
+		// if you would like to add new column name after specific column, you follow the below code.
+		$table->string('qualification')->after('first_name');
+		That means you in the name of qualification column will be created after first_name column.
+    }
+-----------------------------------------------------
+
+* Then you have to write on Terminal the folowing code.
+---------------------------------------------------------
+php artisan migrate
+---------------------------------------------------------
+
+Finallay a new column will be added in the name of qualification on existing table.
+
+https://laravel.com/docs/5.0/schema#adding-columns
+
+
+
+
+26. How to delete column name from table.
+
+
+
+* At first you have to create a new table. Such as
+------------------------------------------------
+php artisan make:migration drom_column_operation_table
+----------------------------------------------
+
+* Then open this file. And you write the following code.
+-----------------------------------------------------
+public function up()
+    {
+        Schema::table('tableName', function (Blueprint $table) {
+			$table->dropColumn('columnName');
+        });
+		
+		// if you would like to delete/drop more column names, you follow the below code.
+		
+		Schema::table('tableName', function (Blueprint $table) {
+			$table->dropColumn(['columnName', 'columnName']);
+        });
+    }
+-----------------------------------------------------
+
+* Then you have to write on Terminal the folowing code.
+---------------------------------------------------------
+php artisan migrate
+---------------------------------------------------------
+
+Finallay columnName and columnName columns will be deleted from mentioned table.
+
+
+27. How to delete table form database.
+
+before using below code, you have to folow 26. no. starting rules.
+
+	public function up()
+		{
+			Schema::dropIfExists('war');
+		}
+
+
+28. How to use ForeignId?
+
+
+
+
+29. php artisan migrate:fresh
+down() methons is executed. 
+
+30. php artisan migrate:refresh
+31. php artisan migrate:rollback
+32. php artisan migrate:reset
