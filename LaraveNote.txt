@@ -298,3 +298,22 @@ down() methons is executed.
 30. php artisan migrate:refresh
 31. php artisan migrate:rollback
 32. php artisan migrate:reset
+
+
+33. Naming conventions
+https://github.com/alexeymezenin/laravel-best-practices#follow-laravel-naming-conventions
+
+
+34. Controller naming convention
+
+RegisterController
+ProfileController
+PostController
+
+35. Laravel debugbar tools
+------------------------------------------------
+composer require barryvdh/laravel-debugbar --dev
+------------------------------------------------
+
+details here
+https://blog.devgenius.io/how-to-debug-laravel-app-using-laravel-debugbar-ec51a8587786
