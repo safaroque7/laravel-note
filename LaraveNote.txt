@@ -317,3 +317,36 @@ composer require barryvdh/laravel-debugbar --dev
 
 details here
 https://blog.devgenius.io/how-to-debug-laravel-app-using-laravel-debugbar-ec51a8587786
+
+
+
+
+
+36. All kinds of input type for Column type in Laravel
+-------------------------------------------------------
+<input type="button">  
+<input type="checkbox">  ====== $table====== $table=>();
+<input type="color"> ====== $table=> 
+<input type="date"> ====== $table=> date
+<input type="datetime-local"> ====== $table=> 
+<input type="email"> ====== $table=> 
+<input type="file"> ====== $table=> 
+<input type="hidden"> ====== $table=> 
+<input type="image"> ====== $table=> 
+<input type="month"> ====== $table=> 
+<input type="number"> ====== $table=> 
+<input type="password"> ====== $table=> 
+<input type="radio"> ====== $table=> 
+<input type="range"> ====== $table=> 
+<input type="reset"> ====== $table=> 
+<input type="search"> ====== $table=> 
+<input type="submit"> ====== $table=> 
+<input type="tel"> ====== $table=> 
+<input type="text"> ====== $table=>longText();
+
+<input type="text"> ====== $table=>Text();
+The text method creates a TEXT equivalent column:
+
+<input type="time"> ====== $table=> 
+<input type="url"> ====== $table=> 
+<input type="week"> ====== $table=> 
