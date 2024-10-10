@@ -350,3 +350,40 @@ The text method creates a TEXT equivalent column:
 <input type="time"> ====== $table=> 
 <input type="url"> ====== $table=> 
 <input type="week"> ====== $table=> 
+
+
+
+37.
+
+*** Current asking
+how to navigate next post by using right or left key from keyboad.
+
+
+
+ClientController.php
+//edit single client info
+    public function editSingleClientInfo($id)
+    {
+        $editableSingleClientInfo = Client::findOrFail($id);
+
+        // get previous user id
+        $previous = Client::where('id', '<', $editableSingleClientInfo->id)->max('id');
+
+        // get next user id
+        $next = Client::where('id', '>', $editableSingleClientInfo->id)->min('id');
+
+        return view('client.edit-single-client-info', [
+            'editableSingleClientInfo' => $editableSingleClientInfo,
+            'previous' => $previous,
+            'next' => $next,
+        ]);
+    }
+	
+	
+		///edit-single-client-info.blade.php
+	 <h1 class="mb-0"> <a href="{{ URL::to('edit-single-client-info/' . $previous) }}"
+                            class="text-dark"> <i class="transition bi bi-chevron-compact-left hover-item-arrow"></i>
+                        </a> </h1>
+
+                    <h1 class="mb-0"> <a href="{{ URL::to('edit-single-client-info/' . $next) }}" class="text-dark">
+                            <i class="transition bi bi-chevron-compact-right hover-item-arrow"></i> </a> </h1>
