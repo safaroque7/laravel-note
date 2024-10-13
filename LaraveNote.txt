@@ -521,3 +521,4 @@ get_header(); ?>
 8.  Previous and Next Post
 9.  Using App->Providers->AppServiceProvider for every single page of the application
 10. Using Pagination
+11. Category based post
