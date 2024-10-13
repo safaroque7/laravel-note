@@ -1,0 +1,523 @@
+1. How to download Laravel project from Github and run it?
+https://www.youtube.com/watch?v=1xQCp_Yfpi0
+
+2. How to blade templeting?
+
+3. How to create controller on laravel to send data to database?
+
+4. How to send data to database on laravel with DB query bilders?
+
+5. How to log in on Laravel? 
+
+6. $request->session()->put('key', 'value');
+Data can be stored in session using the put(). The put() method will take two arguments, the "key" and "Value"
+
+7. $value = $request->session()->get('key');
+Data can be stored in session using the get(). The get() method will take one argument "key".
+
+8. $request->session()->forget('key');
+The forget() method is used to delete an item from the session. This method will take "key" as the argument.
+
+9. $request->session()->flush();
+The flush() method is used to delete all session data.
+
+10. pull() method is used to retrieve data from session and delete it afterwards.
+Now you can ask me is there any difference between forget() method and pull() method?
+The answer will be, Yes. There is a difference between forget() and pull() method is that forget() method will not return the value of the session and pull() method will return it and delete that value from session.
+
+11. Is there any difference between redirect() and view() in laravel?
+
+রাউটারের মাধ্যমে কোন পেইজ দেখাতে চাইলে Route::get()
+রাউটারের মাধ্যমে কোন ডাটা পাস করতে চাইলে Route::post();
+
+রাউট যদি Route::post(); লিখা হয় তাহলে কন্ট্রোলারের মেথড redirect() করতে হবে।  ???
+আর রাউট যদি Route::get(); লিখা হয় তাহলে কন্ট্রোলারের মেথড view() করতে হবে।  ???
+
+12. Is there any difference between route() and to_route() in laravel?
+to_route() is global;
+
+13. When do we have to use Route::get() and Route::post()?
+
+14. To go new website..
+return redirect()->away("https://webnewsdesign.com"); In this case Route has to be Route::get();
+
+15. লগিন করা থাকলেই কেবল হোম পেইজে যেতে পারবে, অন্যথায় লগিন পেইজে রিডিরেক্ট করে দেওয়া হবে। 
+
+16. আমি দুটি কম্পিউটারে কাজ করি। একটি বাসায়, অন্যটি অফিসে। অফিসে যতটুকু কাজ করি, সেটুকু গিটহাবে তুলে রাখি। সেটা আবার বাসায় গিয়ে ক্লোন করে কাজ করি। সেক্ষেত্রে কি প্রতিবার ক্লোন করা ছাড়া আর কোনোভাবে কাজ করা যায়?
+
+Solution
+https://github.com/safaroque7/laravelNote/blob/main/solution.jpg
+
+@error directive
+
+
+
+*********************************************
+
+
+17. রিলোড দিলে সর্বশেষ পোস্ট রিপোস্ট হয়। কন্ট্রোলের কোড নিচে দেওয়া হল। এর সমাধান খুঁজে বের করতে হবে। 
+
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class postController extends Controller
+{
+    public function post(Request $request)
+    {
+
+        $request->validate([
+            "tweet" => 'required|min:1',
+        ]);
+
+        $data = [
+            "tweet" => $request->tweet,
+        ];
+
+        DB::table("post")->insert($data);
+
+        $posts = DB::table("post")->orderBy('id', 'desc')->get();
+
+        return view("welcome", compact('posts'));
+    }
+}
+
+
+**Solution
+We have to create controller by folloing code
+php artisan make:controller posts --resource
+
+As a result we will get a file where there are 7 methods. Such as 
+1. index
+2. create
+3. store
+4. show
+5. edit
+6. update
+7. destroy
+
+We have to code for for home page view following way.
+
+public function index()
+    {
+        $posts = DB::table("post")->orderBy('id', 'desc')->get();
+        // dd($posts);
+
+        return view("welcome", compact('posts'));
+    }
+	
+	
+Then
+
+ public function store(Request $request)
+    {
+        $request->validate([
+            "tweet" => 'required|min:1',
+        ]);
+
+        $data = [
+            "tweet" => $request->tweet,
+        ];
+
+        DB::table("post")->insert($data);
+        return redirect()->route("posts.index");
+    }
+	
+	
+*********************************************
+
+
+
+
+18. How will I realize that when we have to use left join, right join, outer join of database in DB query builder?
+
+
+
+
+Route::get('/', function () {
+    $posts = DB::table('users')
+        ->leftJoin('post', 'users.id', '=', 'post.id')
+        ->get();
+
+        // dd($posts);
+
+    return view('welcome', compact('posts'));
+});
+
+** Explanation
+
+We would like to add 'post' table with 'users' table.
+leftJoin('post', 'users.id', '=', 'post.id')
+The user's id and post's id have to be same.
+
+Finally we will get a query where there will be a datum as a array.
+Then we will get data as usual.
+
+
+
+
+19.
+যে আইডি দিয়েই লগিন করি না কেন, আগের সকল পোস্ট এই ইউজারের নামে দেখায়।
+
+
+
+20. std:Class, it is not a main issue. You have to follow other words there are in this error.
+
+21. route, controller, migration [serial]
+Migration
+Route
+controller
+
+22. after using --resource what methods we are given, what if we change these. Such index() will be myIndex and so on.
+Ans: Yes, you can.
+
+
+22. code beautifier or clean code | php code fixer
+https://github.com/squizlabs/PHP_CodeSniffer
+
+
+23. How to change table name ?
+
+* At first you have to create a new table. Such as
+------------------------------------------------
+php artisan make:migration create_rename_table
+----------------------------------------------
+
+* Then open this file. And you write the following code uner the up() function.
+-----------------------------------------------------
+ public function up()
+    {
+        Schema::rename('testing', 'newTable'); 
+		//testing is existing table name and newTable is the new table table
+    }
+-----------------------------------------------------
+
+* Then you have to write on Terminal the folowing code.
+---------------------------------------------------------
+php artisan migrate
+---------------------------------------------------------
+
+Finallay existing table name will be changed with new name.
+
+
+24. How to delete table name in laravel?
+
+
+25. How to add new column name on existing table in laravel?
+
+* At first you have to create a new table. Such as
+------------------------------------------------
+php artisan make:migration create_operation_table
+----------------------------------------------
+
+* Then open this file. And you write the following code.
+-----------------------------------------------------
+public function up()
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('qualification');
+        });
+		
+		// if you would like to add new column name after specific column, you follow the below code.
+		$table->string('qualification')->after('first_name');
+		That means you in the name of qualification column will be created after first_name column.
+    }
+-----------------------------------------------------
+
+* Then you have to write on Terminal the folowing code.
+---------------------------------------------------------
+php artisan migrate
+---------------------------------------------------------
+
+Finallay a new column will be added in the name of qualification on existing table.
+
+https://laravel.com/docs/5.0/schema#adding-columns
+
+
+
+
+26. How to delete column name from table.
+
+
+
+* At first you have to create a new table. Such as
+------------------------------------------------
+php artisan make:migration drom_column_operation_table
+----------------------------------------------
+
+* Then open this file. And you write the following code.
+-----------------------------------------------------
+public function up()
+    {
+        Schema::table('tableName', function (Blueprint $table) {
+			$table->dropColumn('columnName');
+        });
+		
+		// if you would like to delete/drop more column names, you follow the below code.
+		
+		Schema::table('tableName', function (Blueprint $table) {
+			$table->dropColumn(['columnName', 'columnName']);
+        });
+    }
+-----------------------------------------------------
+
+* Then you have to write on Terminal the folowing code.
+---------------------------------------------------------
+php artisan migrate
+---------------------------------------------------------
+
+Finallay columnName and columnName columns will be deleted from mentioned table.
+
+
+27. How to delete table form database.
+
+before using below code, you have to folow 26. no. starting rules.
+
+	public function up()
+		{
+			Schema::dropIfExists('war');
+		}
+
+
+28. How to use ForeignId?
+
+
+
+
+29. php artisan migrate:fresh
+down() method is executed. 
+
+30. php artisan migrate:refresh
+31. php artisan migrate:rollback
+32. php artisan migrate:reset
+
+
+33. Naming conventions
+https://github.com/alexeymezenin/laravel-best-practices#follow-laravel-naming-conventions
+
+
+34. Controller naming convention
+
+RegisterController
+ProfileController
+PostController
+
+35. Laravel debugbar tools
+------------------------------------------------
+composer require barryvdh/laravel-debugbar --dev
+------------------------------------------------
+
+details here
+https://blog.devgenius.io/how-to-debug-laravel-app-using-laravel-debugbar-ec51a8587786
+
+
+
+
+
+36. All kinds of input type for Column type in Laravel
+-------------------------------------------------------
+<input type="button">  
+<input type="checkbox">  ====== $table====== $table=>();
+<input type="color"> ====== $table=> 
+<input type="date"> ====== $table=> date
+<input type="datetime-local"> ====== $table=> 
+<input type="email"> ====== $table=> 
+<input type="file"> ====== $table=> 
+<input type="hidden"> ====== $table=> 
+<input type="image"> ====== $table=> 
+<input type="month"> ====== $table=> 
+<input type="number"> ====== $table=> 
+<input type="password"> ====== $table=> 
+<input type="radio"> ====== $table=> 
+<input type="range"> ====== $table=> 
+<input type="reset"> ====== $table=> 
+<input type="search"> ====== $table=> 
+<input type="submit"> ====== $table=> 
+<input type="tel"> ====== $table=> 
+<input type="text"> ====== $table=>longText();
+
+<input type="text"> ====== $table=>Text();
+The text method creates a TEXT equivalent column:
+
+<input type="time"> ====== $table=> 
+<input type="url"> ====== $table=> 
+<input type="week"> ====== $table=> 
+
+
+
+37.
+
+*** Current asking
+how to navigate next post by using right or left key from keyboad.
+
+
+
+ClientController.php
+//edit single client info
+    public function editSingleClientInfo($id)
+    {
+        $editableSingleClientInfo = Client::findOrFail($id);
+
+        // get previous user id
+        $previous = Client::where('id', '<', $editableSingleClientInfo->id)->max('id');
+
+        // get next user id
+        $next = Client::where('id', '>', $editableSingleClientInfo->id)->min('id');
+
+        return view('client.edit-single-client-info', [
+            'editableSingleClientInfo' => $editableSingleClientInfo,
+            'previous' => $previous,
+            'next' => $next,
+        ]);
+    }
+	
+	
+		///edit-single-client-info.blade.php
+	 <h1 class="mb-0"> <a href="{{ URL::to('edit-single-client-info/' . $previous) }}"
+                            class="text-dark"> <i class="transition bi bi-chevron-compact-left hover-item-arrow"></i>
+                        </a> </h1>
+
+                    <h1 class="mb-0"> <a href="{{ URL::to('edit-single-client-info/' . $next) }}" class="text-dark">
+                            <i class="transition bi bi-chevron-compact-right hover-item-arrow"></i> </a> </h1>
+
+
+
+
+
+
+
+
+
+<?php
+/*
+	Template Name: registration
+*/
+get_header(); ?>
+<?php get_template_part('include/breadcrumb'); ?>
+<!--start wrap-->
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="d-flex justify-content-center mb-3">
+                <button type="button" class="btn btn-primary mr-2"> Seller </button>
+                <button type="button" class="btn btn-info"> Buyer </button>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+
+
+
+    <div class="row">
+
+        <div class="col-md-6 border border-success py-2 mx-auto">
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="fName"> First name </label>
+                        <!-- <input type="text" class="form-control" id="fName" placeholder="First Name"> -->
+                        [text* text-288 id:fName class:form-control]
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="lName"> Last name </label>
+                        <!-- <input type="text" class="form-control" id="lName" placeholder="Last Name"> -->
+                        [text* text-289 id:lName class:form-control]
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group"> 
+                        <label for="fName"> Type of work </label>
+                        <select class="custom-select w-100" id="inputGroupSelect01">
+                            <!-- <option selected>Choose...</option>
+                            <option value="Austista patente B/C/CE/O/OE"> Austista patente B/C/CE/O/OE </option>
+                            <option value="RISTORANTE * BAR * ALBERHO"> RISTORANTE * BAR * ALBERHO</option>
+                            <option value="MURATORE * CARPENTERE"> MURATORE * CARPENTERE </option>
+                            <option value="AUTISTA"> AUTISTA </option>
+                            <option value="GIARONERE"> GIARONERE </option> -->
+
+                            [select* menu-300 "Choose..." "Austista patente B/C/CE/O/OE" "RISTORANTE * BAR * ALBERHO" "MURATORE * CARPENTERE" "AUTISTA" "GIARONERE"]
+
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Email</label>
+                        <!-- <input type="email" class="form-control" id="inputEmail4" placeholder="Email"> -->
+                        [email* email-321 id:inputEmail4 class:form-control]
+                    </div>
+                    <!-- <div class="form-group col-md-6">
+                        <label for="inputPassword4">Password</label>
+                        <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                    </div> -->
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress">Address</label>
+                    <!-- <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St"> -->
+                    [text* text-290 id:inputAddress class:form-control]
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress2">Address 2</label>
+                    <!-- <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor"> -->
+                    [text text-291 id:inputAddress2 class:form-control]
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputCity">City</label>
+                        <!-- <input type="text" class="form-control" id="inputCity"> -->
+                        [text text-292 id:inputCity class:form-control]
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="stateName"> State </label>
+                        <!-- <input type="text" class="form-control" id="stateName"> -->
+                        [text text-293 id:stateName class:form-control]
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputZip">Zip</label>
+                        <!-- <input type="text" class="form-control" id="inputZip"> -->
+                        [text text-294 id:inputZip class:form-control]
+                    </div>
+                </div>
+                <!-- <button type="submit" class="btn btn-primary"> Registration </button> -->
+                [submit class:btn class:btn-primary "Registration"]
+            
+        </div>
+       
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <!--start category_and_other-->
+            <div class="category_and_other registration_g_form">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScBXrHK7AiwENdr7xUB9l4fpxez4mYp--6jGPjv1j2t2RRIzQ/viewform?embedded=true" width="100%" height="2939" frameborder="0" marginheight="0" marginwidth="0">
+					Registration Form
+				</iframe>
+            </div>
+        </div>
+    </div>
+</div>
+<!--.end wrap-->
+<?php get_footer(); ?>
+
+
+
+
+
+1.  Install Laravel
+2.  Install Bootstrap in Laravel
+3.  Installing Breeze
+4.  Blade Templating
+5.  CRUD
+6.  Relationhip
+7.  Showing Date with Carbon
+8.  Previous and Next Post
+9.  Using App->Providers->AppServiceProvider for every single page of the application
+10. Using Pagination
