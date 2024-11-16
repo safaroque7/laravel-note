@@ -362,11 +362,21 @@ ClientController.php
     {
         $editableSingleClientInfo = Client::findOrFail($id);
 
-        // get previous user id
-        $previous = Client::where('id', '<', $editableSingleClientInfo->id)->max('id');
+        
+		
+		
+		$previous = Client::where('id', '<', $singleClientInfo->id)->max('id');
+        $next = Client::where('id', '>', $singleClientInfo->id)->min('id');
 
-        // get next user id
-        $next = Client::where('id', '>', $editableSingleClientInfo->id)->min('id');
+        if(!$previous){
+            $previous = $next;
+        }
+
+        if(!$next){
+            $next = $previous;
+        }
+		
+		
 
         return view('client.edit-single-client-info', [
             'editableSingleClientInfo' => $editableSingleClientInfo,
@@ -383,6 +393,14 @@ ClientController.php
 
                     <h1 class="mb-0"> <a href="{{ URL::to('edit-single-client-info/' . $next) }}" class="text-dark">
                             <i class="transition bi bi-chevron-compact-right hover-item-arrow"></i> </a> </h1>
+							
+							
+							
+//for signle-client-info.blade.php
+
+<h1> <a href="{{ URL::to('single-client-info/' . $previous) }}"> <i class="bi bi-chevron-compact-left"></i> </a> </h1>
+
+<h1> <a href="{{ URL::to('single-client-info/' . $next) }}"> <i class="bi bi-chevron-compact-right"></i> </a> </h1>
 
 
 
@@ -509,14 +527,75 @@ get_header(); ?>
 
 
 
-
+Laravel learning course outline
+-------------------------------
 
 1.  Install Laravel
 2.  Install Bootstrap in Laravel
-3.  Installing Breeze
+3.  Installing Breeze with Bootstrap
 3.  Blade Templating
 4.  CRUD
 5.  Relationhip
 5.  Showing Date with Carbon
 6.  Previous and Next Post
-7.  
+7.  Posting by category wise
+
+
+
+38. How to upload laravel project on cPanel via git from github.
+39. How to get data from AJAX by clicking checkbox toggle. 
+
+
+40. How can I call CSS and js files after installing any npm package on Laravel 11
+Ans. After installing any npm package, then you have to call js or css file into app.js file
+
+
+
+***************************************************************************************************
+
+41. How to implement pivot table data 
+	1. Need these code in Cleint model
+	-----------------------------
+	protected $fillable = [
+			'name',
+			'phone',
+			'email',
+			'gender',
+			'address',
+			'facebook_review',
+			'google_review',
+			'page_number',
+			'client_photo',
+			'services',
+			'status',
+			'facebook_profile_link',
+			'date_of_birth',
+		];
+
+		public function services(){
+			return $this->belongsToMany(service::class);
+		}
+	------------------------------
+
+
+	2. Need these code in Service model
+	--------------------------------------------
+	public function clients(){
+			$this->belongsToMany(Client::class);
+		}
+	--------------------------------------------
+
+
+	3. Need these code in stor() of client index page after  $arrayClient->save();
+	$arrayClient->services()->sync($request->services);
+
+	4. Need these code in singleClientInfo() 
+	$singleClientInfoForServices = Client::with('services')->findOrFail($id);
+
+	5.
+	Then pass the following way where I would like to show.
+	return view('client.single-client-info', [
+				'singleClientInfoForServices'=>$singleClientInfoForServices
+			]);
+		
+***************************************************************************************************

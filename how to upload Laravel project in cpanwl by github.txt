@@ -1,0 +1,38 @@
+How to upload Laravel project from Github to cPanel.
+
+
+1st step
+--------
+1.	Download laravel project from github on Download folder on your PC by `git clone github URL`
+2.	Delete `/vendor name on .gitignore file before uploading on from your PC to github. Then no need install `composer install` here.
+3.	At first duplicate .env.example file. Then rename it with .env.
+4.	npm install
+5.	`php artisan key:generate` command on terminal. As a result you will get a key in line number 3 which will be copied for using in cPanel.
+
+5.	`npm run build' command
+
+
+2nd setp
+--------
+1.	Create a sub domain by going to domain section on cPanel
+2.	Updating php version 8.3 from MultiPHP Manager
+4.	Create a database with username and password. And store it Notepad++ any file.
+6.	Go to terminal in cPanel
+7.	`cd public_html`
+8.	`cd project_folder`
+9.	`git clone github project link` command on terminal
+10.	Then you need to use token which is generated from github repository wise.
+11.	Manually upload vendor folder in project folder. No need to do it, because it has been uploaded on Github.
+12.	Go to project folder and move all folders to project folder from downloaded folder. And duplicate a .env.example file and rename it with .envfile. Then update with database name, username, password, generated key and App URL.
+13.	Make a folder named up to you on project-folder. Such as `faroque'.
+14.	Move all files to faroque folder except .git 
+15.	Copy all files from public folder to main project folder. Such as gc.webnewsdesign.com
+16.	Open index.php file and replace .. by faroque.
+17.	Change DB_connection if you use MySQL. Deleted # sign inform of next lines. Then Update .env file with database name, username, key and project URL.
+18.	bootstrap, database and storage permission will be 777
+19.	Now go to a browser and browse with URL.
+
+
+webnewsd_laravel_344418
+webnewsd_laravel_344418
+webnewsd_laravel_344418
