@@ -594,8 +594,18 @@ Ans. After installing any npm package, then you have to call js or css file into
 
 	5.
 	Then pass the following way where I would like to show.
+	
+	-----
 	return view('client.single-client-info', [
 				'singleClientInfoForServices'=>$singleClientInfoForServices
 			]);
+
+-------
+
+Where I would like to query
+
+@foreach ($singleClientServiceInformation->services as $serviceItem)
+                            <span> {{ __($serviceItem->name) . ',' }} </span>
+                        @endforeach
 		
 ***************************************************************************************************
